@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native';
 import React, {useMemo, useState} from 'react';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import TodoListItem from '../components/TodoListItem';
 import Search from '../constants/icons/Search';
 import CirclePlus from '../constants/icons/CirclePlus';

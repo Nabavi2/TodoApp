@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import MainScreen from '../screens/MainScreen';
 import EditScreen from '../screens/EditScreen';
-import AddNewDataScreen from '../screens/AddNewdataScreen';
+import AddNewDataScreen from '../screens/AddNewDataScreen';
 
 export default function Navigation() {
   return (
