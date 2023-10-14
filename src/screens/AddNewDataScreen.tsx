@@ -8,6 +8,7 @@ import {
   TextInput,
   ToastAndroid,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React from 'react';
@@ -92,7 +93,10 @@ export default function AddNewDataScreen() {
           const {id, userId, title, body} = values;
           return (
             <>
-              <KeyboardAvoidingView style={{marginTop: 20}}>
+              <TouchableOpacity
+                onPress={() => Keyboard.dismiss()}
+                activeOpacity={0}
+                style={{marginTop: 20}}>
                 <View style={styles.inputRow}>
                   <Text style={styles.text}>ID</Text>
                   <TextInput
@@ -163,7 +167,7 @@ export default function AddNewDataScreen() {
                   }}>
                   <Text style={{fontSize: 18, fontWeight: 'bold'}}>Submit</Text>
                 </TouchableOpacity>
-              </KeyboardAvoidingView>
+              </TouchableOpacity>
             </>
           );
         }}
@@ -188,9 +192,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   inputRow: {
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
     width: Dimensions.get('screen').width * 1,
     alignSelf: 'center',
   },
@@ -218,10 +219,3 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
-
-// info: {
-//   id: number;
-//   title: string;
-//   body: string;
-//   userId: number;
-// };

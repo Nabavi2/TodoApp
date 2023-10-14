@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    // paddingTop: 18,
     marginTop: 5,
   },
 });
