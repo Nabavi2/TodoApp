@@ -33,10 +33,7 @@ const DropdownMenu = ({testID, options, onOptionSelect}: Props) => {
             <Text style={{marginRight: 10}}>{option.icon}</Text>
             <Text
               style={{
-                color:
-                  option.text == 'End' || option.text == 'Remove'
-                    ? 'red'
-                    : '#000',
+                color:'#000',
               }}>
               {option.text}
             </Text>
@@ -64,7 +61,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dropdownText: {
-    fontFamily: 'Exo-Medium',
     color: '#fff',
   },
   dropdown: {
