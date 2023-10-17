@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   dropdown: {
     width: 140,
     borderRadius: 10,
