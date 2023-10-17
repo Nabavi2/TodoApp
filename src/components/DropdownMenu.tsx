@@ -1,15 +1,23 @@
 import React, {useRef} from 'react';
-import ModalDropdown from 'react-native-modal-dropdown';
 import {StyleSheet, TouchableWithoutFeedback, View, Text} from 'react-native';
+import ModalDropdown from 'react-native-modal-dropdown';
 import More from '../constants/icons/More';
 
 interface Props {
   testID: string;
   options: {}[];
+  height?: number;
   onOptionSelect: (option: any) => void;
+  color?: string;
 }
 
-const DropdownMenu = ({testID, options, onOptionSelect}: Props) => {
+const DropdownMenu = ({
+  testID,
+  options,
+  height = 80,
+  onOptionSelect,
+  color = '#000',
+}: Props) => {
   const dropdownRef = useRef(null);
 
   return (
@@ -18,28 +26,19 @@ const DropdownMenu = ({testID, options, onOptionSelect}: Props) => {
       ref={dropdownRef}
       options={options}
       isFullWidth={true}
-      dropdownTextStyle={styles.dropdownText}
-      dropdownStyle={[styles.dropdown, {height: 80, borderColor: '#fff'}]}
-      renderSeparator={() => null}
+      dropdownTextStyle={{color: '#fff'}}
+      dropdownStyle={[styles.dropdown, {height: height, borderColor: '#fff'}]}
       showsVerticalScrollIndicator={false}
       scrollEnabled={false}
       renderRow={(option, index) => (
         <TouchableWithoutFeedback
           onPress={() => {
-            dropdownRef.current.hide();
+            dropdownRef.current && dropdownRef.current.hide();
             onOptionSelect(option);
           }}>
           <View style={styles.dropdownOptionContainer}>
             <Text style={{marginRight: 10}}>{option.icon}</Text>
-            <Text
-              style={{
-                color:
-                  option.text == 'End' || option.text == 'Remove'
-                    ? 'red'
-                    : '#000',
-              }}>
-              {option.text}
-            </Text>
+            <Text style={{color: color}}>{option.text}</Text>
           </View>
         </TouchableWithoutFeedback>
       )}>
@@ -52,8 +51,6 @@ const DropdownMenu = ({testID, options, onOptionSelect}: Props) => {
   );
 };
 
-export default DropdownMenu;
-
 const styles = StyleSheet.create({
   dropdownIconBox: {
     width: 38,
@@ -63,13 +60,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  dropdownText: {
-    fontFamily: 'Exo-Medium',
-    color: '#fff',
-  },
+
   dropdown: {
     width: 140,
-    height: 80,
     borderRadius: 10,
     backgroundColor: '#fff',
     borderColor: '#fff',
@@ -95,3 +88,4 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
+export default DropdownMenu;

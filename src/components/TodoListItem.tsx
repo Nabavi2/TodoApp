@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -9,11 +10,9 @@ import {
   Modal,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
 import DropdownMenu from './DropdownMenu';
 import Edit from '../constants/icons/Edit';
 import Delete from '../constants/icons/Delete';
-import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   info: {
@@ -34,8 +33,7 @@ const todoDropdownOptions = [
     icon: <Delete />,
   },
 ];
-export default function TodoListItem({info, onDeletePost}: Props) {
-  const navigation = useNavigation();
+const TodoListItem = ({info, onDeletePost}: Props) => {
   const [modalShow, setModalShow] = useState(false);
   const [editingOject, setEditingObject] = useState({
     title: '',
@@ -218,7 +216,7 @@ export default function TodoListItem({info, onDeletePost}: Props) {
       </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('screen').width * 0.95,
@@ -276,3 +274,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+export default TodoListItem;

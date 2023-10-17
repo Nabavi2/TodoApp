@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Dimensions,
   Keyboard,
@@ -9,11 +10,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
-import BackArrow from '../constants/icons/BackArrow';
 import {useNavigation} from '@react-navigation/native';
+import BackArrow from '../constants/icons/BackArrow';
 
 const AddNewDataScreen = () => {
   const navigation = useNavigation();
@@ -40,10 +40,10 @@ const AddNewDataScreen = () => {
           },
         },
       );
-      const data = await response.json();
-      console.log('data', data);
-
       if (response.ok) {
+        {
+          /*The resetForm function will clear the data from forms when the data submit correctly */
+        }
         resetForm();
         ToastAndroid.show('Your post added successfully', ToastAndroid.LONG);
       }
@@ -76,6 +76,7 @@ const AddNewDataScreen = () => {
         </TouchableOpacity>
 
         <Text
+          testID="add-new-data-text"
           style={[
             styles.text,
             {

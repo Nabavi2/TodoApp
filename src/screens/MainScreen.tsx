@@ -1,3 +1,4 @@
+import React, {useMemo, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -8,13 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useMemo, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import TodoListItem from '../components/TodoListItem';
 import Search from '../constants/icons/Search';
 import CirclePlus from '../constants/icons/CirclePlus';
-import {useNavigation} from '@react-navigation/native';
 
-const MainScreen = (props: any) => {
+const MainScreen = () => {
   const navigation = useNavigation();
   const [postData, setPostData] = useState([]);
   const [previousPosts, setPreviousPosts] = useState(postData);
