@@ -4,27 +4,22 @@ import {StyleSheet, TouchableWithoutFeedback, View, Text} from 'react-native';
 import More from '../constants/icons/More';
 
 interface Props {
+  testID: string;
   options: {}[];
-  height?: number;
-  marginLeft: number;
-  onOptionSelect: (option) => void;
+  onOptionSelect: (option: any) => void;
 }
 
-const DropdownMenu = ({
-  options,
-  height = 125,
-  marginLeft = 10,
-  onOptionSelect,
-}: Props) => {
+const DropdownMenu = ({testID, options, onOptionSelect}: Props) => {
   const dropdownRef = useRef(null);
 
   return (
     <ModalDropdown
+      testID={testID}
       ref={dropdownRef}
       options={options}
       isFullWidth={true}
       dropdownTextStyle={styles.dropdownText}
-      dropdownStyle={[styles.dropdown, {height: height, borderColor: '#fff'}]}
+      dropdownStyle={[styles.dropdown, {height: 80, borderColor: '#fff'}]}
       renderSeparator={() => null}
       showsVerticalScrollIndicator={false}
       scrollEnabled={false}
@@ -74,7 +69,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     width: 140,
-    height: 120,
+    height: 80,
     borderRadius: 10,
     backgroundColor: '#fff',
     borderColor: '#fff',

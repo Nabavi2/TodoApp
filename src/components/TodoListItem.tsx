@@ -7,13 +7,13 @@ import {
   Alert,
   ToastAndroid,
   Modal,
+  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import DropdownMenu from './DropdownMenu';
 import Edit from '../constants/icons/Edit';
 import Delete from '../constants/icons/Delete';
 import {useNavigation} from '@react-navigation/native';
-import {TextInput} from 'react-native-gesture-handler';
 
 interface Props {
   info: {
@@ -22,6 +22,7 @@ interface Props {
     body: string;
     userId: number;
   };
+  onDeletePost: (postId: number) => void;
 }
 const todoDropdownOptions = [
   {
@@ -33,19 +34,26 @@ const todoDropdownOptions = [
     icon: <Delete />,
   },
 ];
-const TodoListItem = ({info}: Props) => {
+export default function TodoListItem({info, onDeletePost}: Props) {
   const navigation = useNavigation();
   const [modalShow, setModalShow] = useState(false);
   const [editingOject, setEditingObject] = useState({
-    title: 'title',
-    body: 'body',
+    title: '',
+    body: '',
   });
+  const [editedInfo, setEditedInfo] = useState(info);
   {
     /*This function will handle the request for deleting the post */
   }
+  {
+    /*I have implemented the logic of the DELETE method that will work for Real server if we had, 
+    Because we don't have real server so I filtered the list as well to show the user that 
+    we remove a post from the list. */
+  }
   const handleConfirmDelete = () => {
     try {
-      fetch('https://jsonplaceholder.typicode.com/posts/1', {
+      onDeletePost(info.id);
+      fetch(`https://jsonplaceholder.typicode.com/posts/${info.id}`, {
         method: 'DELETE',
       }).then(response => {
         if (!response.ok) {
@@ -67,11 +75,12 @@ const TodoListItem = ({info}: Props) => {
     /*This function will open the modal and add title and body to the modal inputs */
   }
   const onModalShowEditorHandler = () => {
-    setEditingObject({title: info.title, body: info.body});
+    setEditingObject({title: editedInfo.title, body: editedInfo.body});
     setModalShow(true);
   };
   {
-    /*This function will handle the request for editing the title and body */
+    /*This function will handle the request for editing the title and body { I have implemented the real method logic and editing for ui as well. 
+      Because data won't be updated in the server} */
   }
   const onEditHandler = async () => {
     try {
@@ -90,7 +99,8 @@ const TodoListItem = ({info}: Props) => {
           },
         },
       );
-
+      const data = await response.json();
+      setEditedInfo(data);
       if (response.ok) {
         ToastAndroid.show(
           'The post has been edited successfully',
@@ -119,7 +129,7 @@ const TodoListItem = ({info}: Props) => {
   };
   const {title, body} = info;
   return (
-    <View style={styles.container}>
+    <View testID="TodoListItem" style={styles.container}>
       <View
         style={{
           flexDirection: 'row',
@@ -130,13 +140,12 @@ const TodoListItem = ({info}: Props) => {
           Title:
         </Text>
         <DropdownMenu
+          testID="dropdown-menu"
           options={todoDropdownOptions}
           onOptionSelect={onTodoOptionSelect}
-          height={80}
-          marginLeft={10}
         />
       </View>
-      <Text style={[styles.title, {marginTop: -4}]}>{title}</Text>
+      <Text style={[styles.title, {marginTop: -4}]}>{editedInfo.title}</Text>
       <Modal
         transparent={true}
         animationType={'none'}
@@ -204,12 +213,12 @@ const TodoListItem = ({info}: Props) => {
             // marginRight: 30,
             marginTop: -10,
           }}>
-          {body}
+          {editedInfo.body}
         </Text>
       </View>
     </View>
   );
-};
+}
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('screen').width * 0.95,
@@ -267,4 +276,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-export default TodoListItem;

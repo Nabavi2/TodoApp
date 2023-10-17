@@ -1,14 +1,12 @@
 import {
   Dimensions,
   Keyboard,
-  KeyboardAvoidingView,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   ToastAndroid,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React from 'react';
@@ -17,9 +15,15 @@ import {Formik} from 'formik';
 import BackArrow from '../constants/icons/BackArrow';
 import {useNavigation} from '@react-navigation/native';
 
-export default function AddNewDataScreen() {
+const AddNewDataScreen = () => {
   const navigation = useNavigation();
-  const createPost = async (values, {resetForm}) => {
+
+  {
+    /*User would be able to add the new data if the server would be real.
+    Right now I only implemented the logic and UI of adding new data. 
+    If our server would be real, when we add the new data the new data will appear in Main screen */
+  }
+  const createPost = async (values: any, {resetForm}) => {
     try {
       const response = await fetch(
         'https://jsonplaceholder.typicode.com/posts',
@@ -36,11 +40,13 @@ export default function AddNewDataScreen() {
           },
         },
       );
+      const data = await response.json();
+      console.log('data', data);
+
       if (response.ok) {
         resetForm();
         ToastAndroid.show('Your post added successfully', ToastAndroid.LONG);
       }
-      const data = await response.json();
     } catch (error) {
       ToastAndroid.show(
         `Sorry, This error occurred${error}`,
@@ -61,7 +67,7 @@ export default function AddNewDataScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView testID="add-new-data-text" style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <TouchableOpacity
           style={styles.backArrow}
@@ -100,6 +106,7 @@ export default function AddNewDataScreen() {
                 <View style={styles.inputRow}>
                   <Text style={styles.text}>ID</Text>
                   <TextInput
+                    testID="id-input"
                     style={[styles.input, {height: 45}]}
                     value={id}
                     numberOfLines={1}
@@ -113,6 +120,7 @@ export default function AddNewDataScreen() {
                 <View style={styles.inputRow}>
                   <Text style={styles.text}>UserId</Text>
                   <TextInput
+                    testID="user-id-input"
                     style={[styles.input, {height: 45}]}
                     value={userId}
                     numberOfLines={1}
@@ -128,6 +136,7 @@ export default function AddNewDataScreen() {
                 <View style={styles.inputRow}>
                   <Text style={styles.text}>Title</Text>
                   <TextInput
+                    testID="title-input"
                     style={styles.input}
                     value={title}
                     numberOfLines={3}
@@ -146,6 +155,7 @@ export default function AddNewDataScreen() {
                 <View style={styles.inputRow}>
                   <Text style={styles.text}>Body</Text>
                   <TextInput
+                    testID="body-input"
                     style={styles.input}
                     numberOfLines={5}
                     onBlur={handleBlur('body')}
@@ -174,7 +184,7 @@ export default function AddNewDataScreen() {
       </Formik>
     </SafeAreaView>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -219,3 +229,4 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+export default AddNewDataScreen;
